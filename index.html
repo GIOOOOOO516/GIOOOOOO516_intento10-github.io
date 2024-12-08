@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarillo Hats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #222222;
+            color: #f1c40f; /* Color de texto amarillo */
+        }
+
+        /* Encabezado */
+        header {
+             font-size: 1.6em;
+             .cart-icon {
+        font-size: 1.5em; /* Ajuste para el tamaño del ícono del carrito */
+    }
+    background: linear-gradient(135deg, #333333, #f39c12);
+    color: white; /* Color de texto blanco */
+    padding: 15px 30px; /* Espaciado interno */
+    display: flex; /* Flexbox para alinear elementos */
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Alineación vertical centrada */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra suave */
+}
+
+        
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Estilo para el carrito de compras */
+        .cart-icon {
+            font-size: 1.8em;
+            cursor: pointer;
+            position: relative;
+            padding: 12px;
+            background-color: #f1c40f;
+            border-radius: 50%;
+            color: #222222;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-icon:hover {
+            background-color: #e67e22;
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: #e67e22;
+            color: white;
+            font-size: 1em;
+            padding: 3px 8px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #222222;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar ul {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            padding: 15px 20px;
+        }
+
+        .navbar ul li a {
+            color: #f1c40f;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar ul li a:hover {
+            color: #e67e22;
+        }
+
+        /* Carrusel */
+        .carousel-container {
+            position: relative;
+            max-width: 10000px;
+            margin: 30px auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel .gorra {
+            min-width: 100%;
+            box-sizing: border-box;
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .gorra img {
+            width: 100%;
+            height: auto;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        .gorra h3 {
+            font-size: 1.6em;
+            margin: 15px 0;
+            color: #f1c40f;
+        }
+
+        .gorra p {
+            color: #ddd;
+            padding: 0 15px;
+        }
+
+        .price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f1c40f;
+            margin: 10px 0;
+        }
+
+        .buy-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f1c40f;
+            color: #222222;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .buy-button:hover {
+            background-color: #e67e22;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .prev,
+        .next {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            font-size: 2em;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Apartados de Marcas destacadas */
+        .brands-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 30px;
+            background-color: #222222;
+        }
+
+        .brand-box {
+            background-color: #333333;
+            width: 220px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .brand-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .brand-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            filter: grayscale(50%);
+            transition: filter 0.3s ease;
+        }
+
+        .brand-box:hover img {
+            filter: grayscale(0%);
+        }
+
+        .brand-box h3 {
+            font-size: 1.4em;
+            color: #f1c40f;
+            margin: 10px 0;
+        }
+
+        .brand-box p {
+            color: #ddd;
+        }
+
+        .view-collection-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #f1c40f;
+            color: #222222;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .view-collection-button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Carrito desplegable */
+        .cart-dropdown {
+            position: fixed;
+            top: 10%;
+            right: 10px;
+            width: 300px;
+            background-color: #222222;
+            color: #f1c40f;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: none;
+            z-index: 999;
+            border-radius: 8px;
+        }
+
+        .close-cart {
+            font-size: 1.8em;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #f1c40f;
+        }
+
+        .cart-item {
+            margin-bottom: 10px;
+        }
+
+        .cart-item button {
+            background-color: transparent;
+            border: none;
+            color: #f1c40f;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .total-price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #f1c40f;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <h1>Jarillo Hats</h1>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒
+            <div class="cart-count" id="cart-count">0</div>
+        </div>
+    </header>
+  <!-- Barra de navegación -->
+    <nav class="navbar">
+        <ul>
+                        <li><a href="disponible.jsp">Todas las marcas</a></li>
+                        <li><a href="novedades.jsp">Novedades</a></li>
+        </ul>
+    </nav>
+
+    <!-- Carrusel -->
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="gorra" data-id="1" data-name="Gorra Estilo Urbano" data-price="25.00">
+                <img src="https://jchats.mx/cdn/shop/files/Banner_WEB_mx_6fdcb635-ade9-4257-b569-75587a614bf1_1944x.jpg?v=1731441717" alt="Gorra 1">
+                <h3>Gabito Ballesteros</h3>
+                <p>Diseño único para un look moderno.</p>
+                <div class="price">$3000.00</div>
+                <a href="javascript:void(0)" class="buy-button" onclick="addToCart(event)">Comprar</a>
+            </div>
+            <div class="gorra" data-id="2" data-name="Gorra Clásica" data-price="20.00">
+                <img src="https://luxecaps.shop/cdn/shop/files/Banner_WEB_USA_2808x_2e3e8337-cfa6-43dc-84ab-bb37b3d1aab0.webp?v=1729031826&width=3840" alt="Gorra 2">
+                <h3>Goorin bros</h3>
+                <p>El diseño más cómodo para todo el día.</p>
+                <div class="price">$2000.00</div>
+                <a href="javascript:void(0)" class="buy-button" onclick="addToCart(event)">Comprar</a>
+            </div>
+            <div class="gorra" data-id="3" data-name="Gorra Deportiva" data-price="30.00">
+                <img src="https://jchats.mx/cdn/shop/files/BANNER_WEB_MX_f2092ca4-9686-4741-bfb6-27048d7e9452_1400x.jpg?v=1729616397" alt="Gorra 3">
+                <h3>Gorra Junior H</h3>
+                <p>Colaboracion de gorra de Junior H con JC</p>
+                <div class="price">$2500.00</div>
+                <a href="javascript:void(0)" class="buy-button" onclick="addToCart(event)">Comprar</a>
+            </div>
+        </div>
+
+        <div class="carousel-nav">
+            <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
+            <button class="next" onclick="moveCarousel(1)">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Carrito desplegable -->
+    <div class="cart-dropdown" id="cart-dropdown">
+        <div class="close-cart" onclick="toggleCart()">×</div>
+        <h3>Carrito de compras</h3>
+        <div id="cart-items"></div>
+        <div class="total-price">
+            <strong>Total: $<span id="total-price">0.00</span></strong>
+        </div>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2024 Jarillo Hats. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let currentIndex = 0;
+        const carousel = document.querySelector('.carousel');
+        const totalItems = document.querySelectorAll('.carousel .gorra').length;
+        const cartItems = [];
+        const cartCount = document.getElementById('cart-count');
+        const cartDropdown = document.getElementById('cart-dropdown');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('total-price');
+
+        function moveCarousel(direction) {
+            currentIndex = (currentIndex + direction + totalItems) % totalItems;
+            const newTransformValue = -currentIndex * 100;
+            carousel.style.transform = `translateX(${newTransformValue}%)`;
+        }
+
+        function addToCart(event) {
+            const product = event.target.closest('.gorra');
+            const id = product.dataset.id;
+            const name = product.dataset.name;
+            const price = parseFloat(product.dataset.price);
+
+            // Verificar si el producto ya está en el carrito
+            let existingProduct = cartItems.find(item => item.id === id);
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cartItems.push({ id, name, price, quantity: 1 });
+            }
+
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartHtml = '';
+            let total = 0;
+
+            cartItems.forEach(item => {
+                cartHtml += `
+                    <div class="cart-item">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <button onclick="removeFromCart('${item.id}')">Eliminar</button>
+                    </div>
+                `;
+                total += item.price * item.quantity;
+            });
+
+            cartItemsContainer.innerHTML = cartHtml;
+            totalPriceElement.textContent = total.toFixed(2);
+            cartCount.textContent = cartItems.length;
+        }
+
+        function removeFromCart(id) {
+            const index = cartItems.findIndex(item => item.id === id);
+            if (index > -1) {
+                cartItems.splice(index, 1);
+            }
+            updateCart();
+        }
+
+        function toggleCart() {
+            cartDropdown.style.display = (cartDropdown.style.display === 'none' || !cartDropdown.style.display) ? 'block' : 'none';
+        }
+
+        setInterval(() => {
+            moveCarousel(1);
+        }, 5000);
+    </script>
+
+</body>
+
+</html>
